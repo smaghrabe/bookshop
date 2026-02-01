@@ -1,38 +1,37 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("wrong email").required("email requrid"),
-    password: Yup.string().required("wrong password"),
+    email: Yup.string().email("wrong email").required("email required"),
+    password: Yup.string().required("password required"),
   });
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const response = await axios.post(
-        "https://bookstore.eraasoft.pro/api/login", 
+        "https://bookstore.eraasoft.pro/api/login",
         values,
       );
 
       if (response.status === 200) {
-        console.log("Login Success:", response.data);
-        
         localStorage.setItem("token", response.data.token);
-        navigate("/home");
+        // ملاحظة: هنا ممكن تعمل Refresh أو تستخدم Context لتحديث الهيدر فوراً
+        navigate("/");
       }
     } catch (error) {
-      setErrors({ email: " email or password wrong " });
+      setErrors({ email: "Email or password wrong" });
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="relative w-full bg-white">
+    <div className="relative w-full bg-white min-h-screen">
       <div className="h-[250px] w-full relative">
         <img
           src="/bgBooks.png"
@@ -54,7 +53,7 @@ const LoginPage = () => {
             onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
-              <Form className="space-y-6">
+              <Form className="space-y-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">
                     Email
@@ -62,12 +61,13 @@ const LoginPage = () => {
                   <Field
                     name="email"
                     type="email"
+                    placeholder="example@gmail.com"
                     className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none text-gray-500"
                   />
                   <ErrorMessage
                     name="email"
                     component="div"
-                    className="text-red-500 text-xs mt-1"
+                    className="text-red-500 text-[10px] mt-1"
                   />
                 </div>
 
@@ -78,22 +78,49 @@ const LoginPage = () => {
                   <Field
                     name="password"
                     type="password"
+                    placeholder="Enter password"
                     className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none text-gray-500"
                   />
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="text-red-500 text-xs mt-1"
+                    className="text-red-500 text-[10px] mt-1"
                   />
+                </div>
+
+                {/* الجزء الجديد: Remember Me & Forget Password (image_3435dd.jpg) */}
+                <div className="flex justify-between items-center text-xs">
+                  <label className="flex items-center gap-2 text-gray-600 cursor-pointer">
+                    <input type="checkbox" className="accent-pink-600" />
+                    Remember me
+                  </label>
+                  <Link
+                    to="/forgot-password"
+                    size={24}
+                    className="text-pink-600 font-semibold hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#e91e63] text-white py-3 rounded-lg font-bold hover:bg-[#d81b60] transition-all"
+                  className="w-full bg-[#e91e63] text-white py-3 rounded-lg font-bold hover:bg-[#d81b60] transition-all shadow-md active:scale-95 disabled:bg-gray-400 mt-2"
                 >
                   {isSubmitting ? "Checking..." : "Log in"}
                 </button>
+
+                {/* الجزء الجديد: Do you have an account? (image_3435dd.jpg) */}
+                <p className="text-center text-sm text-gray-500 mt-6">
+                  Don't have an account?
+                  <Link
+                    to="/register"
+                    className="text-pink-600 font-bold ml-1 hover:underline"
+                  >
+                    Sign up
+                  </Link>
+                </p>
               </Form>
             )}
           </Formik>
