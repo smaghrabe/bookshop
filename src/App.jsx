@@ -4,17 +4,19 @@ import HomePage from "./component/HomePage";
 import Header from "./component/Header";
 import LoginPage from "./component/LoginPage.jsx";
 import RegistrationPage from "./component/RegistrationPage.jsx";
+import AboutPage from "./component/AboutPage.jsx";
 
 function App() {
   return (
     <div className="w-full bg-white min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-grow">
         <Routes>
-          <Route path="/" element={<RegistrationPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </main>
       <Footer />
