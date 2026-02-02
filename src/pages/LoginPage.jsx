@@ -2,9 +2,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import useAuthStore from "../store";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuthStore();
 
   const validationSchema = Yup.object({
     email: Yup.string().email("wrong email").required("email required"),
@@ -18,9 +20,16 @@ const LoginPage = () => {
         values,
       );
 
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        // ملاحظة: هنا ممكن تعمل Refresh أو تستخدم Context لتحديث الهيدر فوراً
+      console.log("API Response:", response.data);
+
+      const token = response.data.token || response.data.data?.token;
+      const user = response.data.user || response.data.data?.user;
+
+      if (token) {
+        login(user, token);
+
+        localStorage.setItem("token", token);
+
         navigate("/");
       }
     } catch (error) {
@@ -88,7 +97,6 @@ const LoginPage = () => {
                   />
                 </div>
 
-                {/* الجزء الجديد: Remember Me & Forget Password (image_3435dd.jpg) */}
                 <div className="flex justify-between items-center text-xs">
                   <label className="flex items-center gap-2 text-gray-600 cursor-pointer">
                     <input type="checkbox" className="accent-pink-600" />
@@ -111,7 +119,6 @@ const LoginPage = () => {
                   {isSubmitting ? "Checking..." : "Log in"}
                 </button>
 
-                {/* الجزء الجديد: Do you have an account? (image_3435dd.jpg) */}
                 <p className="text-center text-sm text-gray-500 mt-6">
                   Don't have an account?
                   <Link

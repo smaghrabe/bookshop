@@ -1,14 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import Footer from "./component/Footer";
-import HomePage from "./component/HomePage";
-import Header from "./component/Header";
-import LoginPage from "./component/LoginPage.jsx";
-import RegistrationPage from "./component/RegistrationPage.jsx";
-import AboutPage from "./component/AboutPage.jsx";
-import ForgotPassword from "./component/ForgetPassword.jsx";
-import ResetPassword from "./component/ResetPassword.jsx";
-import AddCode from "./component/AddCode.jsx";
-import BooksPage from "./component/BooksPage.jsx";
+import Footer from "./pages/Footer";
+import HomePage from "./pages/HomePage";
+import Header from "./pages/Header";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegistrationPage from "./pages/RegistrationPage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
+import ForgotPassword from "./pages/ForgetPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
+import AddCode from "./pages/AddCode.jsx";
+import BooksPage from "./pages/BooksPage.jsx";
 
 function App() {
   return (
