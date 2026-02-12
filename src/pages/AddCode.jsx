@@ -7,7 +7,6 @@ const AddCode = () => {
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const navigate = useNavigate();
 
-  // دالة للتحكم في التنقل بين المربعات أوتوماتيكياً
   const handleChange = (index, value) => {
     if (isNaN(value)) return;
     const newCode = [...code];
@@ -23,13 +22,12 @@ const AddCode = () => {
     e.preventDefault();
     const otp = code.join("");
     try {
-      // API الـ Verification
       const response = await axios.post(
         "https://bookstore.eraasoft.pro/api/check-code",
         { code: otp },
       );
       if (response.status === 200) {
-        navigate("/reset-password"); // بينقلك لصفحة تعيين كلمة المرور الجديدة
+        navigate("/reset-password");
       }
     } catch (error) {
       alert("Invalid code, please try again.");
@@ -38,7 +36,6 @@ const AddCode = () => {
 
   return (
     <div className="relative w-full bg-white min-h-[70vh]">
-      {/* الهيدر اللي فيه صورة المكتبة كما في الفيجما */}
       <div className="h-[200px] w-full relative">
         <img
           src="/bgBooks.png"
@@ -60,7 +57,6 @@ const AddCode = () => {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            {/* مربعات إدخال الكود */}
             <div className="flex justify-center gap-3">
               {code.map((num, idx) => (
                 <input

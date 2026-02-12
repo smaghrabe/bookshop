@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const ResetPassword = () => {
   const navigate = useNavigate();
 
-  // التحقق من صحة كلمة المرور الجديدة
   const validationSchema = Yup.object({
     password: Yup.string().min(8, "Must be 8 characters").required("Required"),
     password_confirmation: Yup.string()
@@ -16,7 +15,6 @@ const ResetPassword = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      // هنا بنبعت كلمة المرور الجديدة لـ API بتاعك
       const response = await axios.post(
         "https://bookstore.eraasoft.pro/api/reset-password",
         values,
@@ -34,7 +32,6 @@ const ResetPassword = () => {
 
   return (
     <div className="relative w-full bg-white min-h-[70vh]">
-      {/* هيدر الصفحة بنفس روح الفيجما */}
       <div className="h-[200px] w-full relative">
         <img
           src="/bgBooks.png"

@@ -1,17 +1,25 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function NavLinks() {
+  // كلاسات التنسيق الموحدة
+  const linkStyles = ({ isActive }) =>
+    `transition-colors font-bold text-sm ${
+      isActive
+        ? "text-pink-600 border-b-2 border-pink-600 pb-1"
+        : "text-gray-600 hover:text-pink-600"
+    }`;
+
   return (
-    <nav className="hidden md:flex gap-6 text-gray-600 font-medium text-sm">
-      <Link to="/" className="hover:text-pink-600 transition-colors">
+    <nav className="hidden md:flex gap-8 items-center">
+      <NavLink to="/" className={linkStyles}>
         Home
-      </Link>
-      <Link to="/books" className="hover:text-pink-600 transition-colors">
+      </NavLink>
+      <NavLink to="/books" className={linkStyles}>
         Books
-      </Link>
-      <Link to="/about" className="hover:text-pink-600 transition-colors">
+      </NavLink>
+      <NavLink to="/about" className={linkStyles}>
         About us
-      </Link>
+      </NavLink>
     </nav>
   );
 }

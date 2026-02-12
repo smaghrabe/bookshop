@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { CiHeart, CiShoppingCart } from "react-icons/ci";
 import { HiOutlineLogout } from "react-icons/hi";
 import useAuthStore from "../store";
@@ -7,7 +7,8 @@ import Navbar from "../components/navbar/Navbar";
 
 function Header() {
   const navigate = useNavigate();
-  const { isLoggedIn, user, logout } = useAuthStore();
+
+  const { isLoggedIn, user, logout, cartCount, wishlistCount } = useAuthStore();
 
   const handleLogout = () => {
     logout();
@@ -24,30 +25,40 @@ function Header() {
       <div className="flex items-center gap-4">
         {isLoggedIn ? (
           <div className="flex items-center gap-5 text-gray-600">
-            <CiHeart
-              size={24}
-              className="cursor-pointer hover:text-pink-600 transition-colors"
-            />
-            <div className="relative">
+            <Link to="/wishlist" className="relative">
+              <CiHeart
+                size={24}
+                className="cursor-pointer hover:text-pink-600 transition-colors"
+              />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+
+            <Link to="/cart" className="relative">
               <CiShoppingCart
                 size={24}
                 className="cursor-pointer hover:text-pink-600 transition-colors"
               />
-              <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                0
-              </span>
-            </div>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center animate-bounce">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
             <div className="flex items-center gap-3 border-l pl-5 ml-2">
               <div className="text-right hidden sm:block">
                 <p className="text-[11px] font-bold text-gray-800">
-                  {user?.name || "joh"}
+                  {user?.name || "John Doe"}
                 </p>
               </div>
 
               <div className="relative group">
                 <img
-                  src="../../public/book1.png"
+                  src={user?.avatar || "/person.png"}
                   className="w-9 h-9 rounded-full object-cover border border-gray-100 shadow-sm"
                   alt="user avatar"
                 />
