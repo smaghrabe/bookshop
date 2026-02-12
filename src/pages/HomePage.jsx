@@ -5,6 +5,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import useAuthStore from "../store";
+import { motion } from "framer-motion";
 
 const FeatureItem = ({ Icon, title, desc }) => (
   <div className="flex flex-col items-start text-left">
